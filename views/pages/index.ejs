@@ -6,65 +6,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Shi on DRRR (BETA)</title>
-  <link rel="stylesheet" href="/stylesheets/robot.css">
-
-  <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-  <!-- Latest compiled JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-   <link rel="stylesheet" href="/stylesheets/index.css"> 
-  
   <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.4.2/clipboard.min.js"></script>
 
-
-  <!-- <script src="/javascripts/index.js"></script> -->
+  <link rel="stylesheet" href="/stylesheets/cyborg-theme.css">
 </head>
 
 <body>
 
-<div class="container" style="margin:auto">
+  <div class="container" style="margin:auto">
 
-  <div class="row">
-    <div class="col-md-10">
-      <div class="input-group">
-        <input id="get-link" type="text" class="form-control" placeholder="Paste link here...">
-        <span id="get-btn" class="input-group-btn">
+    <div class="input-group">
+      <input id="get-link" type="text" class="form-control" placeholder="Paste link here...">
+      <span id="get-btn" class="input-group-btn">
           <button class="btn btn-default" type="button">Go!</button>
         </span>
-      </div>
     </div>
 
-    <div class="col-md-10">
-      <div class="list-group">
-        <a id="item1" class="list-group-item clipboard" data-clipboard-target="#song-link">
-          <h4 class="list-group-item-heading"></h4>
-          <p id="song-link" class="list-group-item-text"></p>
-        </a>
-      </div>
-    </div>
+    <div class="list-group" id="results"></div>
 
-    <div class="col-md-10 col-md-offset-1">
-      <p>Sau khi bấm "Go!", bấm vào tên bài hát để copy link </p>
-      <p>---------------</p>
-      <p>Chỉ lấy link từ zing</p>
-      <p>Chỉ hỗ trợ từng bài một, chưa không hỗ trợ cả album</p>
-      <p>Chưa hỗ trợ báo lỗi khi xảy ra lỗi</p>
-      <p>
-        link mẫu: http://mp3.zing.vn/bai-hat/Co-Dieu-Gi-Sao-Khong-Noi-Cung-Anh-Trung-Quan-Idol/ZW7FDCCE.html</p>
-    </div>
+
+    <p>Sau khi bấm "Go!", bấm vào tên bài hát để copy link </p>
+    <hr>
+    <p>Chỉ lấy link từ youtube hoặc zing</p>
+    <p>Chỉ hỗ trợ từng bài một, chưa không hỗ trợ cả album</p>
+    <p>Chưa hỗ trợ báo lỗi khi xảy ra lỗi</p>
+    <p>
+      link mẫu: http://mp3.zing.vn/bai-hat/Co-Dieu-Gi-Sao-Khong-Noi-Cung-Anh-Trung-Quan-Idol/ZW7FDCCE.html</p>
+
   </div>
 
-</div>
-
+  <div id="alert-modal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+           <h5>Copied!</h5> 
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
   <script>
     var clipboard = new Clipboard('.clipboard');
   </script>
-  <script src="/javascripts/mylib/linkControl.js"></script>
+  <script src="/javascripts/linkControl.js"></script>
 
 </body>
 
