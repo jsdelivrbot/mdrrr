@@ -88,12 +88,14 @@ function zing(link) {
 //YOUTUBE HANDLER
 function getYoutubeSongObj(link) {
   $.getJSON(link, function (data) {
+    console.log('DATA BACK: '+ data.title+`,`+ data.link)
     addResultItem(data.title, data.link)
   });
 }
 
 function youtube(link) {
   link = '//www.youtubeinmp3.com/fetch/?format=JSON&video=' + link;
+  console.log('linkIP: ' + link)
   getYoutubeSongObj(link);
 }
 
