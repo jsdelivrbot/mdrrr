@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Clipboard.js &mdash; Tuts+</title>
+	<meta rel="description" content="Copy content with Clipboard.js">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.4.2/clipboard.min.js"></script>
+	
+</head>
+<body>
+
+
+<div class="site-content" id="content">
+
+<section class="content-section content-section--main">
+<h1>Intelligent Color Output</h1>
+
+
+<pre>
+<code class="language-less">@body-bg: #000;
+body {
+	background-color: @body-bg;
+	color: contrast(@body-bg);
+}</code>
+</pre>
+
+
+
+<pre>
+<code class="language-less">body {
+  background-color: #000;
+  color: #fff;
+}</code>
+</pre>
+
+
+
+<pre>
+<code class="language-less">@body-bg : #f0f0f0;
+@color-light : #999;
+@color-dark  : #777;
+ 
+body {
+    background-color: @body-bg;
+    color: contrast(@body-bg, @color-dark, @color-light);
+}</code>
+</pre>
+
+
+
+<pre>
+<code class="language-less">@bg: transparent;
+.element {
+    &amp; when not (@bg = transaprent) {
+        background: @bg;
+    }
+}</code>
+</pre>
+
+</section>
+
+<!-- Target -->
+<input id="foo" value="https://github.com/zenorocha/clipboard.js.git">
+
+<!-- Trigger -->
+<button class="btn" data-clipboard-target="#foo">
+    <img alt="Copy to clipboard">
+</button>
+
+</div>
+
+<script>
+(function(){
+		
+	var copyCode = new Clipboard('.btn')
+	
+	copyCode.on('success', function(event) {
+		event.clearSelection();
+		event.trigger.textContent = 'Copied';
+		window.setTimeout(function() {
+			event.trigger.textContent = 'Copy';
+		}, 2000);
+
+	});
+
+})();
+</script>
+
+</body>
+</html>
