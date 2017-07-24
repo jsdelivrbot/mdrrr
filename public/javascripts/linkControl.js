@@ -6,6 +6,8 @@ const hdr = {
   'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:45.0) Gecko/20100101 Firefox/45.0'
 }
 
+const youtubeinmp3_prefix = "www.youtubeinmp3.com/fetch/?video=";
+
 //TOP FUNCTION
 function addResultItem(title, songlink) {
   $('#results').prepend(`<a onclick="showModal('<h4>Copied link!</h4>')" class="list-group-item clipboard" data-clipboard-text="` + songlink + `">
@@ -48,14 +50,14 @@ function convert() {
       break;
     default:
       // console.log('Link cannot be converted! Hostname:' + getHostName(link))
-      showModal(`<h4>Error: Link cannot be converted! Hostname:<br>`+ getHostName(link) +`</h4>`,2300)
+      showModal(`<h4>Error: Link cannot be converted! Hostname:<br>` + getHostName(link) + `</h4>`, 2300)
       break;
   }
 
   $('#get-link').val('');
 }
 
-function showModal(body, timeout=900) {
+function showModal(body, timeout = 900) {
   $('#alert-modal .modal-body').html(body);
   $('#alert-modal').modal('show');
 
@@ -87,15 +89,19 @@ function zing(link) {
 
 //YOUTUBE HANDLER
 function getYoutubeSongObj(link) {
-  $.getJSON(link, function (data) {
-    console.log('DATA BACK: '+ data.title+`,`+ data.link)
-    addResultItem(data.title, data.link)
+  linkinfo = '//www.youtubeinmp3.com/fetch/?format=JSON&video=' + link;
+  linkdownload = youtubeinmp3_prefix + link;
+  
+  console.log(linkinfo);
+  console.log('_______');
+
+  $.getJSON(linkinfo, function (data) {
+    addResultItem(data.title, linkdownload)
+    console.log(data.link);
   });
 }
 
 function youtube(link) {
-  link = '//www.youtubeinmp3.com/fetch/?format=JSON&video=' + link;
-  console.log('linkIP: ' + link)
   getYoutubeSongObj(link);
 }
 
@@ -110,6 +116,6 @@ $("#get-link").keyup(function (event) {
   }
 });
 
-$('.link-item').click(function(){
+$('.link-item').click(function () {
   showModal(`<h5>Copied link!</h5>`)
 })
