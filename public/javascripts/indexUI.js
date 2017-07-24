@@ -6,14 +6,17 @@ const hdr = {
   'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:45.0) Gecko/20100101 Firefox/45.0'
 }
 
-const youtubeinmp3_prefix = "www.youtubeinmp3.com/fetch/?video=";
-
 //TOP FUNCTION
 function addResultItem(title, songlink) {
   $('#results').prepend(`<a onclick="showModal('<h4>Copied link!</h4>')" class="list-group-item clipboard" data-clipboard-text="` + songlink + `">
     <h4 class="list-group-item-heading">`+ title + `</h4>
     <p class="list-group-item-text">`+ songlink + `</p>
   </a>`);
+}
+
+function urlParam(url, name) {
+  var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(url);
+  return results[1] || 0;
 }
 
 function getHostName(url) {
@@ -34,7 +37,7 @@ function getHostName(url) {
   return hostname;
 }
 
-
+//main function of the cotroller
 function convert() {
   link = $('#get-link').val();
 
@@ -88,22 +91,29 @@ function zing(link) {
 }
 
 //YOUTUBE HANDLER
-function getYoutubeSongObj(link) {
-  linkinfo = '//www.youtubeinmp3.com/fetch/?format=JSON&video=' + link;
-  linkdownload = youtubeinmp3_prefix + link;
-  
-  console.log(linkinfo);
-  console.log('_______');
+function youtube(userLink) {
+  console.log(userLink);
 
-  $.getJSON(linkinfo, function (data) {
-    addResultItem(data.title, linkdownload)
-    console.log(data.link);
+  id = urlParam(userLink, 'v');
+
+  // $.getJSON(, function (result) {
+  //   // addResultItem(result.item)
+  //   console.log(result.title, result.linkdownload);
+  // })
+  console.log('//durarara.herokuapp.com/youtube/' + id);
+
+  $.ajax({
+    url: '//durarara.herokuapp.com/youtube/' + id,
+    headers: hdr,
+    method: 'GET',
+    dataType: 'jsonp',
+    success: function (result) {
+      // addResultItem(result.title, result.downloadlink);
+      console.log(result);
+    }
   });
 }
 
-function youtube(link) {
-  getYoutubeSongObj(link);
-}
 
 //UI HANDLER
 $('#get-btn').click(function () {
