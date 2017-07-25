@@ -57,7 +57,7 @@ function getHostName(url) {
 
 //main function of the cotroller
 function convert() {
-  link = $('#get-link').val();
+  link = $('#get-link').val().trim();
 
   switch (getHostName(link)) {
     case 'www.youtube.com':
