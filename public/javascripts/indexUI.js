@@ -74,7 +74,7 @@ function convert() {
       break;
     default:
       // console.log('Link cannot be converted! Hostname:' + getHostName(link))
-      showModal(`<h4>Error: Link cannot be converted!<br> Hostname:` + getHostName(link) + `</h4>`, 2300)
+      showModal(`<h4>Error: Link cannot be converted!<br>Hostname: ` + getHostName(link) + `</h4>`, 2300)
       break;
   }
 
