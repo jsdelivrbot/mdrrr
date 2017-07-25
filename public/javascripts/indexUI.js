@@ -1,10 +1,10 @@
-const hdr = {
-  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-  'Accept-Language': 'en-US,en;q=0.5',
-  'Cache-Control': 'max-age=0',
-  'Connection': 'keep-alive',
-  'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:45.0) Gecko/20100101 Firefox/45.0'
-}
+// const hdr = {
+//   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+//   'Accept-Language': 'en-US,en;q=0.5',
+//   'Cache-Control': 'max-age=0',
+//   'Connection': 'keep-alive',
+//   'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:45.0) Gecko/20100101 Firefox/45.0'
+// }
 
 //TOP FUNCTION
 function addResultItem(title, songlink) {
@@ -48,6 +48,9 @@ function convert() {
     case 'youtube.com':
       youtube(link);
       break;
+    case 'youtu.be':
+      youtube(link);
+      break;
     case 'mp3.zing.vn':
       zing(link);
       break;
@@ -60,22 +63,26 @@ function convert() {
   $('#get-link').val('');
 }
 
+// to show any notification
 function showModal(body, timeout = 900) {
   $('#alert-modal .modal-body').html(body);
   $('#alert-modal').modal('show');
 
-  setTimeout(function () {
-    $('#alert-modal').modal('hide');
-  }, timeout);
+  if (timeout != -1) {
+    setTimeout(function () {
+      $('#alert-modal').modal('hide');
+    }, timeout);
+  }
 }
 
-//ZING HANDLER
+//-------------------------------------------------------------------------------------------
+// ZING HANDLER
 function getZingSongObj(_id) {
   url = '//api.mp3.zing.vn/api/mobile/song/getsonginfo?requestdata={"id":' + '"' + _id + '"}'
 
   $.ajax({
     url: url,
-    headers: hdr,
+    // headers: hdr,
     method: 'GET',
     dataType: 'jsonp',
     data: { info: null },
@@ -92,24 +99,25 @@ function zing(link) {
 
 //YOUTUBE HANDLER
 function youtube(userLink) {
-  console.log(userLink);
 
-  id = urlParam(userLink, 'v');
 
-  // $.getJSON(, function (result) {
-  //   // addResultItem(result.item)
-  //   console.log(result.title, result.linkdownload);
-  // })
-  console.log('//durarara.herokuapp.com/youtube/' + id);
+  if (getHostName(userLink) == 'youtu.be') {
+    var id = userLink.replace(/(^\w+:|^)\/\//, '').replace('youtu.be/','');
+  } else {
+    var id = urlParam(userLink, 'v');
+  }
 
   $.ajax({
-    url: '//durarara.herokuapp.com/youtube/' + id,
-    headers: hdr,
+    url: '/youtube/' + id,
     method: 'GET',
-    dataType: 'jsonp',
+    dataType: 'json',
+    data: { info: null },
+    beforeSend: function () {
+      showModal('<h5>chờ một chút</5> <img src="/img/Dual Ring.svg" height="60px">', 6000);
+    },
     success: function (result) {
-      // addResultItem(result.title, result.downloadlink);
-      console.log(result);
+      addResultItem(result.title, result.linkdownload);
+      $('#alert-modal').modal('hide');
     }
   });
 }
