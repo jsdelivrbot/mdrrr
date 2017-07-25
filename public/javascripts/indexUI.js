@@ -6,13 +6,31 @@
 //   'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:45.0) Gecko/20100101 Firefox/45.0'
 // }
 
+var export_list = new Object;
+
 //TOP FUNCTION
 function addResultItem(title, songlink) {
   $('#results').prepend(`<a onclick="showModal('<h4>Copied link!</h4>')" class="list-group-item clipboard" data-clipboard-text="` + songlink + `">
     <h4 class="list-group-item-heading">`+ title + `</h4>
     <p class="list-group-item-text">`+ songlink + `</p>
   </a>`);
+
+  export_list["music-book-mark-" + title] = songlink;
 }
+
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
 
 function urlParam(url, name) {
   var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(url);
@@ -102,7 +120,7 @@ function youtube(userLink) {
 
 
   if (getHostName(userLink) == 'youtu.be') {
-    var id = userLink.replace(/(^\w+:|^)\/\//, '').replace('youtu.be/','');
+    var id = userLink.replace(/(^\w+:|^)\/\//, '').replace('youtu.be/', '');
   } else {
     var id = urlParam(userLink, 'v');
   }
@@ -126,6 +144,7 @@ function youtube(userLink) {
 //UI HANDLER
 $('#get-btn').click(function () {
   convert();
+
 })
 
 $("#get-link").keyup(function (event) {
@@ -136,4 +155,12 @@ $("#get-link").keyup(function (event) {
 
 $('.link-item').click(function () {
   showModal(`<h5>Copied link!</h5>`)
+})
+
+$('#export-btn').click(function () {
+  if ($.isEmptyObject(export_list)) {
+    showModal('Bạn chưa có gì trong bộ sưu tập')
+  } else {
+    download('collections-from-durarara-music.json', JSON.stringify(export_list));
+  }
 })
