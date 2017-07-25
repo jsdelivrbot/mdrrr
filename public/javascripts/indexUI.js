@@ -74,7 +74,7 @@ function convert() {
       break;
     default:
       // console.log('Link cannot be converted! Hostname:' + getHostName(link))
-      showModal(`<h4>Error: Link cannot be converted! Hostname:<br>` + getHostName(link) + `</h4>`, 2300)
+      showModal(`<h4>Error: Link cannot be converted!<br> Hostname:` + getHostName(link) + `</h4>`, 2300)
       break;
   }
 
@@ -131,7 +131,7 @@ function youtube(userLink) {
     dataType: 'json',
     data: { info: null },
     beforeSend: function () {
-      showModal('<h5>chờ một chút</5> <img src="/img/Dual Ring.svg" height="60px">', 6000);
+      showModal('<h5>Wait a moment</5> <img src="/img/Dual Ring.svg" height="60px">', 6000);
     },
     success: function (result) {
       addResultItem(result.title, result.linkdownload);
@@ -159,7 +159,7 @@ $('.link-item').click(function () {
 
 $('#export-btn').click(function () {
   if ($.isEmptyObject(export_list)) {
-    showModal('Bạn chưa có gì trong bộ sưu tập')
+    showModal('You have nothing to export!')
   } else {
     download('collections-from-durarara-music.json', JSON.stringify(export_list));
   }
