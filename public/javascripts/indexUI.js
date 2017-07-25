@@ -150,7 +150,7 @@ function youtube(userLink) {
         console.log('khong tim thay ne');
         setTimeout(function () {
           showModal('<h4>Cannot find the song you are looking for</h4>');
-        }, 1000);
+        }, 1400);
       }
     }, timeout: 6000
   }).catch(function (e) {
@@ -159,7 +159,7 @@ function youtube(userLink) {
       $('#alert-modal').modal('hide');
       setTimeout(function () {
         showModal('<h4>Cannot find the song you are looking for</h4>');
-      }, 1000);
+      }, 1400);
     }
   });
 }
