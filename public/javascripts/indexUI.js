@@ -131,11 +131,29 @@ function youtube(userLink) {
     dataType: 'json',
     data: { info: null },
     beforeSend: function () {
-      showModal('<h5>Wait a moment</5> <img src="/img/Dual Ring.svg" height="60px">', 6000);
+      showModal('<h5>Wait a moment</5> <img src="/img/Dual Ring.svg" height="60px">', -1);
     },
     success: function (result) {
-      addResultItem(result.title, result.linkdownload);
+      console.log(result);
+      if (result.title != 'error' && result.linkdownload != 'error') {
+        console.log('ok ne');
+        $('#alert-modal').modal('hide');
+        addResultItem(result.title, result.linkdownload);
+      } else {
+        $('#alert-modal').modal('hide');
+        console.log('khong tim thay ne');
+        setTimeout(function () {
+          showModal('Cannot find the song you are looking for');
+        }, 1000);
+      }
+    }, timeout: 6000
+  }).catch(function (e) {
+    if (e.statusText == 'timeout') {
+      console.log('het gio ne');
       $('#alert-modal').modal('hide');
+      setTimeout(function () {
+        showModal('Cannot find the song you are looking for');
+      }, 1000);
     }
   });
 }
