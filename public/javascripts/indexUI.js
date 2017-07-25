@@ -105,7 +105,13 @@ function getZingSongObj(_id) {
     dataType: 'jsonp',
     data: { info: null },
     success: function (data) {
-      addResultItem(data.title, data.link_download["128"]);
+      console.log(data.title, data.link_download["128"]);
+
+      if (data.link_download["128"] != undefined) {
+        addResultItem(data.title, data.link_download["128"]);
+      } else {
+        showModal('<h4>Cannot find the song you are looking for</h4>');
+      }
     }
   });
 }
@@ -135,7 +141,7 @@ function youtube(userLink) {
     },
     success: function (result) {
       console.log(result);
-      if (result.title != 'error' && result.linkdownload != 'error') {
+      if (result.linkdownload != 'error') {
         console.log('ok ne');
         $('#alert-modal').modal('hide');
         addResultItem(result.title, result.linkdownload);
@@ -143,7 +149,7 @@ function youtube(userLink) {
         $('#alert-modal').modal('hide');
         console.log('khong tim thay ne');
         setTimeout(function () {
-          showModal('Cannot find the song you are looking for');
+          showModal('<h4>Cannot find the song you are looking for</h4>');
         }, 1000);
       }
     }, timeout: 6000
@@ -152,7 +158,7 @@ function youtube(userLink) {
       console.log('het gio ne');
       $('#alert-modal').modal('hide');
       setTimeout(function () {
-        showModal('Cannot find the song you are looking for');
+        showModal('<h4>Cannot find the song you are looking for</h4>');
       }, 1000);
     }
   });
