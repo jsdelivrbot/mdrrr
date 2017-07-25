@@ -183,7 +183,7 @@ $('.link-item').click(function () {
 
 $('#export-btn').click(function () {
   if ($.isEmptyObject(export_list)) {
-    showModal('You have nothing to export!')
+    showModal('<h4>You have nothing to export!</h4>')
   } else {
     download('collections-from-durarara-music.json', JSON.stringify(export_list));
   }
