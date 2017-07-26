@@ -4,7 +4,7 @@ var tinyurl = require('tinyurl')
 function getYoutubeObj(id, fn) {
     linkJSON = 'https://getvideo.p.mashape.com/?url=' + 'https://www.youtube.com/watch?v=' + id;
     unirest.get(linkJSON)
-        .header("X-Mashape-Key", "QAEDPv3TDQmshzyLPEvk3T30Gz9pp1BwtUOjsniRJt1zOMcQar")
+        .header("X-Mashape-Key", "<API_KEY>")
         .header("Accept", "text/plain")
         .end(function (result) {
             // console.log(result.status, result.headers, result.body);
