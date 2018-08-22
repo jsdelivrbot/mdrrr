@@ -9,4 +9,5 @@ It allows users to:
 I may add a bot to automatically (join -> play song -> out room) at room address later
 
 *Warning
+
 The website is down in the meantime due to the apis has been blocked, sending requests may not yeild the wanted results.
