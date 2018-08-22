@@ -1,3 +1,14 @@
 .p-wrapper{
     word-wrap: break-word;
 }
+
+.row-no-padding {
+  margin-left: 15px;
+  margin-right: 0;
+}
+
+[class*="col-"],  /* Elements whose class attribute begins with "col-" */
+[class^="col-"] { /* Elements whose class attribute contains the substring "col-" */
+  padding-left: 5px;
+  padding-right: 5px;
+}

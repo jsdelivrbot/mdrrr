@@ -12,35 +12,48 @@
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.4.2/clipboard.min.js"></script>
 
-  <link rel="stylesheet" href="/stylesheets/cyborg-theme.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+
+   <link rel="stylesheet" href="/stylesheets/cyborg-theme.css"> 
   <link rel="stylesheet" href="/stylesheets/index.css">
 
 </head>
 
 <body>
 
-  <div class="container p-wrapper" style="margin:auto">
-
+  <div class="container p-wrapper" style="margin:auto; padding-top:25px;" >
     <div class="input-group">
-      <input id="get-link" type="text" class="form-control" placeholder="Paste link here...">
+      <input id="get-link" type="text" class="form-control" placeholder="Paste song link here (youtube or mp3.zing) ...">
       <span id="get-btn" class="input-group-btn">
           <button class="btn btn-default" type="button">Go!</button>
         </span>
     </div>
 
     <div class="list-group" id="results"></div>
-
-    <p>Sometimes links shared on drrr do not work &lt;(") will fix in the near future</p>
-    <hr>
-    <p>Only get links from youtube or mp3.zing</p>
-    <p>Only support getting links of single songs, full album is not (yet) supported</p>
-    <p>I do not own any song from youtube or mp3.zing.vn. This site does not support downloading songs. If one of these
-      sites contacts me then i will absolutely take down this website. </p>
-    <p>Email: shilock@tuta.io</p> 
-
-    <a href="#" id="export-btn">Export to drrr collections</a>
   </div>
 
+  <div class="container p-wrapper" style="margin:auto;" >
+    <div class="row row-no-padding">
+      <div class="col-xs-6 col-sm-5 col-md-5 col-lg-5">
+        <button id="toggle-linkonly-btn" type="button" class="btn btn-default" value=true style="float:right">use share command</button>
+      </div>
+      <div class="col-xs-6 col-sm-7 col-md-7 col-lg-7">
+        <button id="export-btn" type="button" class="btn btn-default">export collections</button>
+      </div>
+    </div>
+  </div>    
+
+    <div class="container p-wrapper" style="margin:auto;" >
+    <hr>
+  
+    <p>This website crawls the youtube and mp3.zing.vn database to get only the links to audio files. No commercial use of those audio files is performed.</p>
+    <p>However, if one of these sites contacts me then i will absolutely and gladly take down this website. </p>
+    <p>Email: shilock@tuta.io</p>
+
+  </div>
+
+  <!-- Modal default:hidding -->
   <div id="alert-modal" class="modal fade p-wrapper">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -51,10 +64,21 @@
     </div>
   </div>
 
-
-
   <script>
-    var clipboard = new Clipboard('.clipboard');
+    // var clipboard = new Clipboard('.clipboard');
+    new Clipboard('.result-item-clipboard', {
+      text: function (trigger) {
+        var btn_value = $('#toggle-linkonly-btn').attr('value');
+
+        btn_value = (btn_value == 'true');
+
+        if (btn_value) {
+          return trigger.getAttribute('songlink');
+        } else {
+          return trigger.getAttribute('songlink-with-prefix');
+        }
+      }
+    });
   </script>
   <script src="/javascripts/indexUI.js"></script>
 

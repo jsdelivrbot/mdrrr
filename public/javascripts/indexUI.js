@@ -9,10 +9,20 @@
 var export_list = new Object;
 
 //TOP FUNCTION
+function resultItemClicked() {
+  showModal('<h4>Copied!</h4>');
+}
+
 function addResultItem(title, songlink) {
-  $('#results').prepend(`<a onclick="showModal('<h4>Copied link!</h4>')" class="list-group-item clipboard" data-clipboard-text="` + songlink + `">
-    <h4 class="list-group-item-heading">`+ title + `</h4>
-    <p class="list-group-item-text">`+ songlink + `</p>
+
+  var btn_value = $('#toggle-linkonly-btn').attr('value');
+  btn_value = (btn_value == 'true');
+
+  var _copy = btn_value ? songlink : "/share " + songlink + " " + title;
+
+  $('#results').prepend(`<a onclick="resultItemClicked()" class="list-group-item result-item-clipboard" songlink="` + songlink + `" songlink-with-prefix="/share ` + songlink + ` ` + title + `">
+    <h4>`+ title + `</h4>
+    <p>` + _copy + `</p>
   </a>`);
 
   export_list["music-book-mark-" + title] = songlink;
@@ -152,7 +162,7 @@ function youtube(userLink) {
           showModal('<h4>Cannot find the song you are looking for</h4>');
         }, 1400);
       }
-    }, timeout: 6000
+    }, timeout: 10000
   }).catch(function (e) {
     if (e.statusText == 'timeout') {
       console.log('het gio ne');
@@ -187,4 +197,35 @@ $('#export-btn').click(function () {
   } else {
     download('collections-from-durarara-music.json', JSON.stringify(export_list));
   }
+})
+
+$('#toggle-linkonly-btn').click(function () {
+  var current_value = $('#toggle-linkonly-btn').attr('value');
+  current_value = (current_value == 'true')
+  current_value = !current_value;
+  $('#toggle-linkonly-btn').attr('value', current_value);
+
+  if (current_value) {
+    $('#toggle-linkonly-btn').text('use share command');
+
+    $('#results a').each(function () {
+      var change = $(this).attr('songlink')
+      $('p', this).text(
+        change
+      )
+
+    })
+  } else {
+    $('#toggle-linkonly-btn').text('use link only');
+
+    $('#results a').each(function () {
+      var change = $(this).attr('songlink-with-prefix')
+
+      $('p', this).text(
+        change
+      )
+
+    })
+  }
+
 })
